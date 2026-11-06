@@ -168,7 +168,7 @@ document.addEventListener('keydown',e=>{
 
 /* ---- layout ---- */
 function fit(){
-  const vw=innerWidth,vh=innerHeight,s=Math.min(vw/390*1.04,vh/640,1.4); // sized by width, so the card isn't shrunk by the browser's toolbars
+  const vw=innerWidth,vh=innerHeight,s=Math.min(vw/390*0.92,vh/640,1.4); // sized by width, so the card isn't shrunk by the browser's toolbars
   vb={w:vw/s,h:vh/s};vb.x=195-vb.w/2;vb.y=422-vb.h/2;
   svg.setAttribute('viewBox',`${vb.x} ${vb.y} ${vb.w} ${vb.h}`);
   $('tg').setAttribute('transform',`translate(0,${Math.min(0,vb.y+vb.h-104-740)})`); // keep the button above the bottom edge on short screens
