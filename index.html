@@ -140,12 +140,12 @@ function toOrder(){
   tween(COL(),1050,IO);co.style.transition='opacity .5s linear .55s';co.style.opacity=0;showAuthor();
   if(!RM){const h=$('backHalo');let hi=false;
     const f=()=>{if(my!==run)return;hi=!hi;h.style.opacity=hi?1:.2;setTimeout(f,1100)};
-    h.style.opacity=.2;setTimeout(f,1900)}
+    h.style.opacity=.2;setTimeout(f,1600)}
 }
 function showAuthor(){
   const n=$('nameBlock'),e='cubic-bezier(0,0,.58,1)';
-  n.style.transition=`opacity .7s ${e} .9s,transform .7s ${e} .9s`;n.style.opacity=1;n.style.transform='none';
-  const bk=$('back'),t=$('tg');bk.style.transition=`opacity .3s ${e} 1.6s`;bk.style.opacity=1;t.style.transition='opacity 1.05s cubic-bezier(.42,0,.58,1)';t.style.opacity=1;
+  n.style.transition=`opacity .6s ${e} .7s,transform .6s ${e} .7s`;n.style.opacity=1;n.style.transform='none';
+  const bk=$('back'),t=$('tg');bk.style.transition=`opacity .3s ${e} 1.3s`;bk.style.opacity=1;t.style.transition='opacity 1.05s cubic-bezier(.42,0,.58,1)';t.style.opacity=1;
   $('tg').removeAttribute('tabindex');
 }
 function hideAuthor(){
