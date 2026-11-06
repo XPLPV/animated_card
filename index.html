@@ -1,0 +1,188 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="theme-color" content="#0B0B12">
+<meta name="description" content="Xenia Pylypiv — Making order from chaos. Telegram: @X_PLPV">
+<title>Xenia Pylypiv — Designer</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Barlow+Semi+Condensed:wght@500;600&display=swap" rel="stylesheet">
+<style>
+html,body{margin:0;height:100%;overflow:hidden;background:#0B0B12;overscroll-behavior:none}
+#s{position:fixed;inset:0;width:100%;height:100%;touch-action:none;user-select:none;-webkit-user-select:none;-webkit-tap-highlight-color:transparent;font-family:'Barlow Semi Condensed','Arial Narrow',Arial,sans-serif}
+#nameBlock{opacity:0;transform:translateY(16px)}
+#back,#tg{opacity:0}
+#author>*{pointer-events:none}
+.o #hit,.o #tg{pointer-events:auto}
+#hit,#hit:focus,#hit:focus-visible{fill:transparent;cursor:pointer;outline:none}
+#tg{cursor:pointer;outline:none}
+.pill{fill:rgba(255,255,255,0);stroke:rgba(255,255,255,.6);stroke-width:1.5;transition:fill .15s cubic-bezier(0,0,.58,1),stroke .15s cubic-bezier(0,0,.58,1)}
+@media(hover:hover){#tg:hover .pill{fill:rgba(255,255,255,.12);stroke:#fff}}
+#tg:active .pill{fill:rgba(255,255,255,.2);transition-duration:.1s}
+#tg:focus-visible .pill{stroke:#fff}
+#backHalo{opacity:.2;transition:opacity 1s cubic-bezier(.42,0,.58,1)}
+</style>
+</head>
+<body>
+<noscript><style>#s{display:none}</style><p style="color:#fff;font:20px sans-serif;padding:24px">Xenia Pylypiv — Making order from chaos.<br><a style="color:#fff" href="https://t.me/X_PLPV">@X_PLPV</a></p></noscript>
+<svg id="s" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 390 844" role="img" aria-label="Xenia Pylypiv, Designer. Making order from chaos.">
+  <defs>
+    <radialGradient id="gB"><stop offset="0" stop-color="#6FD0FF" stop-opacity=".6"/><stop offset=".45" stop-color="#6FD0FF" stop-opacity=".2"/><stop offset="1" stop-color="#6FD0FF" stop-opacity="0"/></radialGradient>
+    <radialGradient id="gO"><stop offset="0" stop-color="#FF5A36" stop-opacity=".55"/><stop offset=".45" stop-color="#FF5A36" stop-opacity=".18"/><stop offset="1" stop-color="#FF5A36" stop-opacity="0"/></radialGradient>
+    <radialGradient id="gW"><stop offset="0" stop-color="#DFF4FF" stop-opacity=".6"/><stop offset=".45" stop-color="#DFF4FF" stop-opacity=".2"/><stop offset="1" stop-color="#DFF4FF" stop-opacity="0"/></radialGradient>
+  </defs>
+  <g id="glow"></g>
+  <g id="cores"></g>
+  <g id="dot"><circle id="dh" fill="url(#gO)"/><circle id="dc" fill="#FF5A36"/></g>
+  <g id="author">
+    <g id="nameBlock">
+      <text id="name" x="195" y="426" text-anchor="middle" font-size="56" font-weight="600" letter-spacing=".4" fill="#fff" aria-label="Xenia Pylypiv">Xenia Pylypiv</text>
+      <text x="195" y="466" text-anchor="middle" font-size="24" font-weight="500" letter-spacing=".4" fill="#fff" fill-opacity=".92">Making order from chaos</text>
+    </g>
+    <g id="back"><circle id="backHalo" r="12" fill="url(#gW)"/><circle id="backCore" r="4" fill="#fff"/></g>
+    <rect id="hit" role="button" aria-label="Back"/>
+    <a id="tg" href="https://t.me/X_PLPV" target="_blank" rel="noopener noreferrer" aria-label="Telegram @X_PLPV" tabindex="-1">
+      <rect class="pill" x="100" y="714" width="190" height="52" rx="26"/>
+      <g transform="translate(124,728) scale(.03141)" fill="#fff"><polygon points="0,195 764,0 295,334 310,419 365,459 273,530 237,342"/><polygon points="764,0 547,632 365,459 310,419"/></g>
+      <text x="162" y="748" font-size="24" font-weight="500" fill="#fff">@X_PLPV</text>
+    </a>
+  </g>
+</svg>
+<script>
+(()=>{
+const $=id=>document.getElementById(id),svg=$('s'),NS='http://www.w3.org/2000/svg';
+const RM=matchMedia('(prefers-reduced-motion: reduce)').matches;
+const TX=0,TY=0,TITTLE=.652; // nudge the white dot over the "ı" here if needed
+const mk=(p,a)=>{const e=document.createElementNS(NS,'circle');for(const k in a)e.setAttribute(k,a[k]);p.appendChild(e);return e};
+
+/* ---- the word "Designer" as a dot grid ---- */
+const G={D:[0,'XX.|X.X|X.X|X.X|X.X|X.X|XX.'],e:[2,'XXX|X.X|XXX|X..|XXX'],s:[2,'XXX|X..|XXX|..X|XXX'],i:[2,'X|X|X|X|X'],g:[2,'XXX|X.X|X.X|X.X|XXX|..X|XX.'],n:[2,'XX.|X.X|X.X|X.X|X.X'],r:[2,'XXX|X..|X..|X..|X..']};
+const C=11,word='Designer',rows=ch=>G[ch][1].split('|');
+let cols=word.length-1;for(const ch of word)cols+=rows(ch)[0].length;
+const x0=(390-cols*C)/2,y0=422-4*C+.5;let cx=0,ix=0;const P=[];
+for(const ch of word){const r=rows(ch);if(ch==='i')ix=x0+(cx+.5)*C;
+  r.forEach((row,ri)=>[...row].forEach((v,ci)=>{if(v==='X')P.push(x0+(cx+ci+.5)*C,y0+(G[ch][0]+ri+.5)*C)}));cx+=r[0].length+1}
+const N=P.length/2,iy=y0+C/2;
+
+/* ---- state = [glow, dotX, dotY, dotCore, dotHalo, dotHaloOpacity, ...x,y per dot] ---- */
+const S=(g,x,y,rc,rh,ho,pts)=>Float64Array.from([g,x,y,rc,rh,ho,...pts]);
+const DIM=S(.2,ix,iy,5,13,1,P),GLOW=S(1,ix,iy,7,18,1,P);
+let vb={x:0,y:0,w:390,h:844},bx=131,by=400;
+const R=()=>{let m=0;for(const X of[vb.x,vb.x+vb.w])for(const Y of[vb.y,vb.y+vb.h])m=Math.max(m,Math.hypot(X-195,Y-422));return m+30};
+const COL=()=>{const p=[];for(let i=0;i<N;i++)p.push(bx,by);return S(0,195,422,R(),13,0,p)};
+const CP=[131.2,144.1,249.6,81.7,208.0,315.1,35.0,427.9,27.6,369.2,39.3,96.2,167.7,682.2,58.8,201.7,241.1,778.4,222.9,339.8,367.4,61.1,324.8,254.5,66.2,117.8,125.7,673.6,79.4,487.0,245.3,320.4,212.3,74.0,35.6,187.9,260.3,364.4,127.7,490.1,178.1,262.6,301.6,580.4,102.4,481.2,204.1,720.6,278.1,253.2,368.8,118.0,165.4,626.7,69.0,413.2,28.2,555.9,290.8,480.1,330.9,273.7,265.7,497.1,223.9,387.1,318.1,776.0,185.6,552.7,36.0,582.4,248.3,814.5,311.5,250.5,153.7,556.2,22.2,391.5,74.8,117.2,35.3,635.5,60.8,221.1,155.5,717.7,43.2,381.6,212.9,727.2,310.6,711.7,114.8,354.6,143.9,727.8,360.7,144.1,77.8,208.6,98.5,410.0,227.3,233.1,15.5,357.5,147.7,474.8,359.0,573.6,200.6,515.6,258.8,67.0,339.6,644.9,330.6,659.1,156.0,341.6,51.5,528.9,36.5,77.6,89.6,153.2,137.1,65.9,14.1,144.4,50.7,313.4,23.2,720.0,236.3,142.2,105.3,300.5,145.8,121.8,321.3,814.5,182.7,409.1,45.1,105.3,138.0,234.7,314.0,152.5,22.4,781.0,205.2,140.7,210.6,45.5,205.2,802.9,326.5,578.2,108.5,315.9,74.5,638.5,206.8,644.1,133.3,201.5,307.8,808.0],CD=[290.2,619.1];
+const XS=[],YS=[];for(let i=0;i<N;i++){XS.push(CP[2*i]);YS.push(CP[2*i+1])}
+const x1=Math.min(...XS),x2=Math.max(...XS),y1=Math.min(...YS),y2=Math.max(...YS);
+// the fixed chaos layout, stretched so the dots fill the whole screen (proportions kept)
+const CH=()=>{const mx=x=>vb.x+14+(x-x1)/(x2-x1)*(vb.w-28),my=y=>vb.y+24+(y-y1)/(y2-y1)*(vb.h-48),p=[];
+  for(let i=0;i<N;i++)p.push(mx(CP[2*i]),my(CP[2*i+1]));
+  return S(.2,mx(CD[0]),my(CD[1]),5,13,1,p)};
+
+/* ---- drawing ---- */
+const gl=$('glow'),co=$('cores'),dh=$('dh'),dc=$('dc'),H=[],K=[];
+for(let i=0;i<N;i++){H.push(mk(gl,{r:12,fill:'url(#gB)'}));K.push(mk(co,{r:4,fill:'#fff'}))}
+let cur=S(.2,ix,iy,5,13,1,P);
+const cl=(v,a,b)=>Math.max(a,Math.min(b,v));
+function draw(){
+  gl.setAttribute('opacity',cl(cur[0],0,1));
+  dh.setAttribute('cx',cur[1]);dh.setAttribute('cy',cur[2]);dh.setAttribute('r',Math.max(0,cur[4]));dh.setAttribute('opacity',cl(cur[5],0,1));
+  dc.setAttribute('cx',cur[1]);dc.setAttribute('cy',cur[2]);dc.setAttribute('r',Math.max(0,cur[3]));
+  for(let i=0;i<N;i++){const x=cur[6+2*i],y=cur[7+2*i];
+    H[i].setAttribute('cx',x);H[i].setAttribute('cy',y);K[i].setAttribute('cx',x);K[i].setAttribute('cy',y)}
+}
+
+/* ---- easings (same as Figma) ---- */
+const bez=(a,b,c,d)=>t=>{if(t<=0||t>=1)return t;let lo=0,hi=1,u=t;
+  for(let i=0;i<22;i++){u=(lo+hi)/2;(3*(1-u)*(1-u)*u*a+3*(1-u)*u*u*c+u*u*u)<t?lo=u:hi=u}
+  return 3*(1-u)*(1-u)*u*b+3*(1-u)*u*u*d+u*u*u};
+const IO=bez(.42,0,.58,1),OUT=bez(0,0,.58,1);
+const spring=(k,c,dur)=>{const w=Math.sqrt(k),z=c/(2*w),wd=w*Math.sqrt(1-z*z);
+  return t=>{if(t>=1)return 1;const s=t*dur,e=Math.exp(-z*w*s);return 1-e*(Math.cos(wd*s)+z*w/wd*Math.sin(wd*s))}};
+const SP=spring(106.5,12,1); // stiffness 106.5, damping 12, mass 1
+const BURST=1200; // ms: burst back to chaos
+const PAUSE=4500; // ms: the same pause in chaos, on the word, and after the burst
+let tid=0;
+function tween(to,ms,ease,easeDot,logR){
+  const from=cur.slice(),t0=performance.now(),id=++tid;
+  return new Promise(res=>{const f=now=>{
+    if(id!==tid)return res(false);
+    const t=Math.min(1,(now-t0)/ms),e=ease(t),e2=(easeDot||ease)(t);
+    for(let i=0;i<cur.length;i++)cur[i]=from[i]+(to[i]-from[i])*(i<6?e2:e);
+    if(logR)cur[3]=Math.exp(Math.log(from[3])+(Math.log(to[3])-Math.log(from[3]))*e2); // circle shrinks evenly, so it can bounce too
+    draw();t<1?requestAnimationFrame(f):res(true)};requestAnimationFrame(f)});
+}
+const wait=ms=>new Promise(r=>setTimeout(r,ms));
+
+/* ---- flow ---- */
+let mode='c',run=0,timers=[];
+const clr=()=>{timers.forEach(clearTimeout);timers=[]},at=(ms,f)=>timers.push(setTimeout(f,ms));
+
+function enterChaos(back){
+  clr();run++;mode='c';svg.classList.remove('o');hideAuthor();co.style.transition='none';co.style.opacity=1;
+  const to=CH();
+  if(back)tween(to,BURST,SP,null,true);else{cur=to;draw()}
+  at((back?BURST:0)+PAUSE,assemble);   // auto-assemble if nobody touches        // auto-open the author screen
+}
+async function assemble(){
+  if(mode!=='c')return;mode='w';const my=run;
+  if(!await tween(DIM,1400,IO)||my!==run)return;
+  at(PAUSE,toOrder);   // auto-open the author screen
+  if(RM)return;
+  while(my===run){
+    await wait(100);if(my!==run)return;if(!await tween(GLOW,1000,IO))return;
+    await wait(100);if(my!==run)return;if(!await tween(DIM,1000,IO))return;
+  }
+}
+function toOrder(){
+  if(mode==='o')return;clr();const my=++run;mode='o';svg.classList.add('o');
+  tween(COL(),1050,IO);co.style.transition='opacity .5s linear .55s';co.style.opacity=0;showAuthor();
+  if(!RM){const h=$('backHalo');let hi=false;
+    const f=()=>{if(my!==run)return;hi=!hi;h.style.opacity=hi?1:.2;setTimeout(f,1100)};
+    h.style.opacity=.2;setTimeout(f,1900)}
+}
+function showAuthor(){
+  const n=$('nameBlock'),e='cubic-bezier(0,0,.58,1)';
+  n.style.transition=`opacity .7s ${e} .9s,transform .7s ${e} .9s`;n.style.opacity=1;n.style.transform='none';
+  const bk=$('back'),t=$('tg');bk.style.transition=`opacity .3s ${e} 1.6s`;bk.style.opacity=1;t.style.transition='opacity 1.05s cubic-bezier(.42,0,.58,1)';t.style.opacity=1;
+  $('tg').removeAttribute('tabindex');
+}
+function hideAuthor(){
+  const n=$('nameBlock');n.style.transition='opacity .25s linear,transform 0s .25s';n.style.opacity=0;n.style.transform='translateY(16px)';
+  for(const id of['back','tg']){const el=$(id);el.style.transition='opacity .25s linear';el.style.opacity=0}
+  $('tg').setAttribute('tabindex','-1');
+}
+
+/* ---- input: tap or swipe, whichever comes first ---- */
+const act=()=>{if(mode==='c')assemble();else if(mode==='w')toOrder()};
+let g=null;
+svg.addEventListener('pointerdown',e=>{g={x:e.clientX,y:e.clientY,done:false}});
+svg.addEventListener('pointermove',e=>{if(g&&!g.done&&Math.hypot(e.clientX-g.x,e.clientY-g.y)>14){g.done=true;act()}});
+svg.addEventListener('pointerup',()=>{if(g&&!g.done)act();g=null});
+svg.addEventListener('pointercancel',()=>{g=null});
+$('hit').addEventListener('click',()=>{if(mode==='o')enterChaos(true)});
+document.addEventListener('keydown',e=>{
+  if(mode==='o'){if(e.key==='Escape')enterChaos(true);return}
+  if(e.key==='Enter'||e.key===' '){e.preventDefault();act()}});
+
+/* ---- layout ---- */
+function fit(){
+  const vw=innerWidth,vh=innerHeight,s=Math.min(vw/390,vh/844,1.4);
+  vb={w:vw/s,h:vh/s};vb.x=195-vb.w/2;vb.y=422-vb.h/2;
+  svg.setAttribute('viewBox',`${vb.x} ${vb.y} ${vb.w} ${vb.h}`);
+  const h=$('hit');h.setAttribute('x',vb.x);h.setAttribute('width',vb.w);h.setAttribute('y',322);h.setAttribute('height',194);
+  if(mode==='o'){cur=COL();draw()}else if(mode==='c'){cur=CH();draw()}
+}
+function measure(){
+  try{const e=$('name').getExtentOfChar(3);if(e.width>0)bx=e.x+e.width/2}catch(_){}
+  bx+=TX;by=426-TITTLE*56+TY;
+  for(const id of['backHalo','backCore']){$(id).setAttribute('cx',bx);$(id).setAttribute('cy',by)}
+}
+addEventListener('resize',fit);addEventListener('orientationchange',fit);
+const fonts=document.fonts?Promise.all([document.fonts.load('600 56px "Barlow Semi Condensed"'),document.fonts.load('500 24px "Barlow Semi Condensed"')]):Promise.resolve();
+Promise.race([fonts,wait(2000)]).catch(()=>{}).then(()=>{measure();fit();enterChaos(false)});
+})();
+</script>
+</body>
+</html>
