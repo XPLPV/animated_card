@@ -116,7 +116,7 @@ function tween(to,ms,ease,easeDot,logR){
 const wait=ms=>new Promise(r=>setTimeout(r,ms));
 
 /* ---- flow ---- */
-let mode='c',run=0,timers=[];
+let mode='c',run=0,timers=[],orderAt=0;
 const clr=()=>{timers.forEach(clearTimeout);timers=[]},at=(ms,f)=>timers.push(setTimeout(f,ms));
 
 function enterChaos(back){
@@ -136,7 +136,7 @@ async function assemble(){
   }
 }
 function toOrder(){
-  if(mode==='o')return;clr();const my=++run;mode='o';svg.classList.add('o');
+  if(mode==='o')return;orderAt=performance.now();clr();const my=++run;mode='o';svg.classList.add('o');
   tween(COL(),1050,IO);co.style.transition='opacity .5s linear .55s';co.style.opacity=0;showAuthor();
   if(!RM){const h=$('backHalo');let hi=false;
     const f=()=>{if(my!==run)return;hi=!hi;h.style.opacity=hi?1:.2;setTimeout(f,1100)};
@@ -161,14 +161,15 @@ svg.addEventListener('pointerdown',e=>{g={x:e.clientX,y:e.clientY,done:false}});
 svg.addEventListener('pointermove',e=>{if(g&&!g.done&&Math.hypot(e.clientX-g.x,e.clientY-g.y)>14){g.done=true;act()}});
 svg.addEventListener('pointerup',()=>{if(g&&!g.done)act();g=null});
 svg.addEventListener('pointercancel',()=>{g=null});
-$('hit').addEventListener('click',()=>{if(mode==='o')enterChaos(true)});
+// on phones the same tap that opens this screen also fires a click on the freshly enabled hit area, so ignore clicks right after opening
+$('hit').addEventListener('click',()=>{if(mode==='o'&&performance.now()-orderAt>700)enterChaos(true)});
 document.addEventListener('keydown',e=>{
   if(mode==='o'){if(e.key==='Escape')enterChaos(true);return}
   if(e.key==='Enter'||e.key===' '){e.preventDefault();act()}});
 
 /* ---- layout ---- */
 function fit(){
-  const vw=innerWidth,vh=innerHeight,s=Math.min(vw/390*0.92,vh/640,1.4); // sized by width, so the card isn't shrunk by the browser's toolbars
+  const vw=innerWidth,vh=innerHeight,s=Math.min(vw/390*0.97,vh/640,1.4); // sized by width, so the card isn't shrunk by the browser's toolbars
   vb={w:vw/s,h:vh/s};vb.x=195-vb.w/2;vb.y=422-vb.h/2;
   svg.setAttribute('viewBox',`${vb.x} ${vb.y} ${vb.w} ${vb.h}`);
   $('tg').setAttribute('transform',`translate(0,${Math.min(0,vb.y+vb.h-104-740)})`); // keep the button above the bottom edge on short screens
