@@ -76,9 +76,20 @@ const CP=[131.2,144.1,249.6,81.7,208.0,315.1,35.0,427.9,27.6,369.2,39.3,96.2,167
 const XS=[],YS=[];for(let i=0;i<N;i++){XS.push(CP[2*i]);YS.push(CP[2*i+1])}
 const x1=Math.min(...XS),x2=Math.max(...XS),y1=Math.min(...YS),y2=Math.max(...YS);
 // the fixed chaos layout, stretched so the dots fill the whole screen (proportions kept)
-const CH=()=>{const mx=x=>vb.x+14+(x-x1)/(x2-x1)*(vb.w-28),my=y=>vb.y+24+(y-y1)/(y2-y1)*(vb.h-48),p=[];
-  for(let i=0;i<N;i++)p.push(mx(CP[2*i]),my(CP[2*i+1]));
-  return S(.2,mx(CD[0]),my(CD[1]),5,13,1,p)};
+const OX=[...XS,CD[0]],OY=[...YS,CD[1]]; // original positions (the last one is the orange dot)
+const CH=()=>{const mx=x=>vb.x+14+(x-x1)/(x2-x1)*(vb.w-28),my=y=>vb.y+24+(y-y1)/(y2-y1)*(vb.h-48);
+  const q=OX.map((x,i)=>[mx(x),my(OY[i])]),L=vb.x+14,Rt=vb.x+vb.w-14,T=vb.y+24,B=vb.y+vb.h-24;
+  // on narrow / short screens the stretch squeezes the layout: push apart dots that came closer than they were in the design (or closer than 18)
+  for(let it=0;it<60;it++){let moved=false;
+    for(let a=0;a<q.length;a++)for(let b=a+1;b<q.length;b++){
+      const min=Math.min(18,Math.hypot(OX[a]-OX[b],OY[a]-OY[b]));
+      let dx=q[b][0]-q[a][0],dy=q[b][1]-q[a][1],d=Math.hypot(dx,dy);
+      if(d<min){if(d<.01){dx=1;dy=0;d=1}const k=(min-d)/2/d;
+        q[a][0]-=dx*k;q[a][1]-=dy*k;q[b][0]+=dx*k;q[b][1]+=dy*k;moved=true}}
+    for(const p of q){p[0]=Math.min(Rt,Math.max(L,p[0]));p[1]=Math.min(B,Math.max(T,p[1]))}
+    if(!moved)break}
+  const p=[];for(let i=0;i<N;i++)p.push(q[i][0],q[i][1]);
+  return S(.2,q[N][0],q[N][1],5,13,1,p)};
 
 /* ---- drawing ---- */
 const gl=$('glow'),co=$('cores'),dh=$('dh'),dc=$('dc'),H=[],K=[];
