@@ -78,18 +78,19 @@ const x1=Math.min(...XS),x2=Math.max(...XS),y1=Math.min(...YS),y2=Math.max(...YS
 // the fixed chaos layout, stretched so the dots fill the whole screen (proportions kept)
 const OX=[...XS,CD[0]],OY=[...YS,CD[1]]; // original positions (the last one is the orange dot)
 const CH=()=>{const mx=x=>vb.x+14+(x-x1)/(x2-x1)*(vb.w-28),my=y=>vb.y+24+(y-y1)/(y2-y1)*(vb.h-48);
-  const q=OX.map((x,i)=>[mx(x),my(OY[i])]),L=vb.x+14,Rt=vb.x+vb.w-14,T=vb.y+24,B=vb.y+vb.h-24;
-  // on narrow / short screens the stretch squeezes the layout: push apart any dots closer than 16 px
-  for(let it=0;it<60;it++){let moved=false;
-    for(let a=0;a<q.length;a++)for(let b=a+1;b<q.length;b++){
-      const min=16;
-      let dx=q[b][0]-q[a][0],dy=q[b][1]-q[a][1],d=Math.hypot(dx,dy);
-      if(d<min){if(d<.01){dx=1;dy=0;d=1}const k=(min-d)/2/d;
-        q[a][0]-=dx*k;q[a][1]-=dy*k;q[b][0]+=dx*k;q[b][1]+=dy*k;moved=true}}
-    for(const p of q){p[0]=Math.min(Rt,Math.max(L,p[0]));p[1]=Math.min(B,Math.max(T,p[1]))}
-    if(!moved)break}
-  const p=[];for(let i=0;i<N;i++)p.push(q[i][0],q[i][1]);
-  return S(.2,q[N][0],q[N][1],5,13,1,p)};
+  const L=vb.x+14,Rt=vb.x+vb.w-14,T=vb.y+24,B=vb.y+vb.h-24,MIN=16;
+  let seed=7;const rnd=()=>{seed|=0;seed=seed+0x6D2B79F5|0;let t=Math.imul(seed^seed>>>15,1|seed);t=t+Math.imul(t^t>>>7,61|t)^t;return((t^t>>>14)>>>0)/4294967296}; // fixed seed: same layout every time
+  const cl=(v,a,b)=>Math.min(b,Math.max(a,v)),res=[],placed=[];
+  const ok=(x,y)=>placed.every(p=>Math.hypot(p[0]-x,p[1]-y)>=MIN);
+  // the orange dot goes first, then the rest. A dot that has no room is moved to a random free spot nearby (not pushed along a line, so no chains appear)
+  for(const i of [N,...Array(N).keys()]){let x=mx(OX[i]),y=my(OY[i]);
+    if(!ok(x,y)){let f=false;
+      for(let k=0;k<120&&!f;k++){const an=rnd()*6.2832,r=MIN+rnd()*(k<60?30:120),nx=cl(x+Math.cos(an)*r,L,Rt),ny=cl(y+Math.sin(an)*r,T,B);
+        if(ok(nx,ny)){x=nx;y=ny;f=true}}
+      for(let k=0;k<400&&!f;k++){const nx=L+rnd()*(Rt-L),ny=T+rnd()*(B-T);if(ok(nx,ny)){x=nx;y=ny;f=true}}}
+    res[i]=[x,y];placed.push([x,y])}
+  const p=[];for(let i=0;i<N;i++)p.push(res[i][0],res[i][1]);
+  return S(.2,res[N][0],res[N][1],5,13,1,p)};
 
 /* ---- drawing ---- */
 const gl=$('glow'),co=$('cores'),dh=$('dh'),dc=$('dc'),H=[],K=[];
