@@ -82,7 +82,7 @@ const CH=()=>{const mx=x=>vb.x+14+(x-x1)/(x2-x1)*(vb.w-28),my=y=>vb.y+24+(y-y1)/
   // on narrow / short screens the stretch squeezes the layout: push apart dots that came closer than they were in the design (or closer than 18)
   for(let it=0;it<60;it++){let moved=false;
     for(let a=0;a<q.length;a++)for(let b=a+1;b<q.length;b++){
-      const min=Math.min(18,Math.hypot(OX[a]-OX[b],OY[a]-OY[b]));
+      const min=Math.min(20,Math.hypot(OX[a]-OX[b],OY[a]-OY[b]));
       let dx=q[b][0]-q[a][0],dy=q[b][1]-q[a][1],d=Math.hypot(dx,dy);
       if(d<min){if(d<.01){dx=1;dy=0;d=1}const k=(min-d)/2/d;
         q[a][0]-=dx*k;q[a][1]-=dy*k;q[b][0]+=dx*k;q[b][1]+=dy*k;moved=true}}
